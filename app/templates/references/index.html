@@ -1,0 +1,282 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Landing Page - Start Bootstrap Theme</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'greenlandPage/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="{% static 'greenlandPage/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'greenlandPage/vendor/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'greenlandPage/css/greenland.css' %}" rel="stylesheet">
+  <link href="{% static 'greenlandPage/css/bootstrap-slider.css' %}" rel="stylesheet">
+
+  <script>
+	var staticURL = "{%static 'greenlandPage/' %}";
+  </script>
+
+  <script src="{% static 'greenlandPage/vendor/jquery/jquery.min.js' %}"></script>
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+	<!--TODO Fill in links -->
+    
+      <a class="navbar-brand" href="../#">Home</a>
+      <a class="navbar-brand" href="../lessons">Lessons</a>
+      <a class="navbar-brand" href="../references">References</a>
+      <a class="navbar-brand" href="../about">About Us</a>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="col-lg-4 mx-auto">
+          <h1 class="mb-5">DYNAMOD</h1>
+        </div>
+    </div>
+  </header>
+
+
+
+  
+
+
+
+<div class="row">
+	<!--Map Selector -->
+	<div class="column" id="left-pane">
+		<center>
+		<label for="mapType" style="font-size:3">Map type:</label>
+		<select id="mapType">
+			<option value="0">Velocity</option>
+			<option value="1">Bed</option>
+			<option value="2">Surface</option>
+			<option value="3">SMB</option>
+			<option value="4">Thickness</option>
+			<option value="5">T2M</option>
+		</select>
+		</center>
+		<div id="map"></div> 
+	</div>
+	
+
+	<div class="column" id="right-pane">
+		<div class="row" id="point-form">
+			<form>
+				<label style='width:15%;'>Point Name:</label><input style='width:25%;' type=text" id='point-name'>
+				<label style='width:7%;'>Lat:</label><input style='width:12%;' type='text' id='lat-input'>
+				<label style='width:7%;'>Long:</label><input style='width:12%;' type='text' id='long-input'>
+				<button type='button' id='point-lookup' style='width:20%;'>Point Look up</button>
+			</form>
+
+
+			<div id='point-table-container' class='scrollable'>
+				<table id='point-table'>
+					<tr>
+						<th>Point Name</th>
+						<th>Lat</th>
+						<th>Long</th>
+						<th>Velocity</th>
+						<th>Bed</th>
+						<th>Surface</th>
+						<th>SMB</th>
+						<th>Thickness</th>
+						<th>T2M</th>
+					</tr>
+
+				</table>
+
+			</div>
+		</div>
+
+
+
+
+		<div class="row" id="flowline-chart">
+                        <form>
+                                <label style='width:15%;'>Flowline Name:</label><input style='width:15%;' type=text" value='Jakobshavn' id='flowline-name'>
+                                <label style='width:7%;'>Lat:</label><input style='width:12%;' type='text' value='69.1' id='flow-lat-input'>
+                                <label style='width:7%;'>Long:</label><input style='width:12%;' type='text' value='-49.46' id='flow-long-input'>
+                                <label style='width:15%;'>Distance:</label><input style='width:7%;' type='text' value='100' id='distance-input'>
+                                <button type='button' id='flowline-lookup' style='width:25%;'>Flowline Look up</button>
+                        </form>
+
+                        <div id='flowline-table-container' class='scrollable'>
+                                <table id='flowline-table'>
+                                        <tr>
+                                                <th>Point</th>
+                                                <th>Lat</th>
+                                                <th>Long</th>
+                                                <th>Velocity</th>
+                                                <th>Bed</th>
+                                                <th>Surface</th>
+                                                <th>SMB</th>
+                                                <th>Thickness</th>
+                                                <th>T2M</th>
+                                        </tr>
+                                </table>
+
+                        </div>
+		</div>
+	</div>
+
+</div>
+
+
+<div id="parameters">
+	<div class="row">
+		<div class="row">
+			
+			<div class="card">
+				<div class="card-body">
+					<h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+					<span data-toggle="tooltip" title="Param1Description">Param1</span>
+					</h3>
+				
+					<center>
+					<form class="range-field my-1">
+					<input id="slider1" class="no-border" type="range" value="0" min="0" max="100"/>
+					</form>
+
+
+						<h2 class="display-4" style="color:#0d47a1"><strong id="param1Value">0</strong></h2>
+					</center>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			
+			<div class="card">
+				<div class="card-body">
+					<h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+					<span data-toggle="tooltip" title="Param2Description">Param2</span>
+					</h3>
+				
+
+					<center>
+					<form class="range-field my-1">
+					<input id="slider2" class="no-border" type="range" value="0" min="0" max="100" />
+					</form>
+
+						<h2 class="display-4" style="color:#0d47a1"><strong id="param2Value">0</strong></h2>
+					</center>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			
+			<div class="card">
+				<div class="card-body">
+					<h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+					<span data-toggle="tooltip" title="Param3Description">Param3</span>
+					</h3>
+				
+
+					<center>
+					<form class="range-field my-1">
+					<input id="slider3" class="no-border" type="range" value="0" min="0" max="100" />
+					</form>
+
+						<h2 class="display-4" style="color:#0d47a1"><strong id="param3Value">0</strong></h2>
+					</center>
+
+				</div>
+			</div>
+		</div>
+	
+	
+		<div class="row">
+			
+			<div class="card">
+				<div class="card-body">
+					<h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+					<span data-toggle="tooltip" title="Param4Description">Param4</span>
+					</h3>
+				
+
+					<center>
+					<form class="range-field my-1">
+					<input id="slider4" class="no-border" type="range" value="0" min="0" max="100" />
+					</form>
+
+						<h2 class="display-4" style="color:#0d47a1"><strong id="param4Value">0</strong></h2>
+					</center>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<center>
+<button type="button" class="btn btn-primary">Run Model</button>
+
+<div>
+<h3>Charts here</h3>
+</div>
+
+</center>
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <ul class="list-inline mb-2">
+            <li class="list-inline-item">
+              <a href="../about">About</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Contact</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Terms of Use</a>
+            </li>
+            <li class="list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+              <a href="#">Privacy Policy</a>
+            </li>
+          </ul>
+          <p class="text-muted small mb-4 mb-lg-0">&copy; DYNAMOD 2019. All Rights Reserved.</p>
+        </div>
+
+
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'greenlandPage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'greenlandPage/scripts/map.js' %}"></script>
+	
+  <script src="{% static 'greenlandPage/scripts/script.js' %}"></script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZbuGSEBqEPNHYvx1MzAIeX3MU6jOHjMw&callback=initMap">
+</script>
+
+</body>
+
+</html>

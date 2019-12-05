@@ -1,0 +1,36 @@
+body{
+  margin:0;
+  display:flex;
+}
+*{
+  box-sizing:border-box;
+}
+a {
+  width:50vw;
+  height: 100vh;
+  border:1px solid white;
+  display:flex;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.text-block-ant{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.text-block-green {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}

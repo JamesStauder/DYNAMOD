@@ -1,0 +1,251 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+   <head>
+      <script>
+         var staticURL = "{%static 'antarcticaPage/' %}";
+         var myFlowlines = [];
+         var myPoints = [];
+            
+      </script>
+      <!-- Stylesheets  -->
+      <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+      <link rel="stylesheet" href="{%static 'antarcticaPage/css/antarctica.css' %}">
+      <link rel="stylesheet" href="{% static 'greenlandPage/vendor/bootstrap/css/bootstrap.min.css' %}">
+      <!-- Scripts   -->
+      <script src="{% static 'greenlandPage/scripts/v5.3.0/build/ol.js' %}"></script>
+      <script src="{% static 'greenlandPage/vendor/jquery/jquery.min.js' %}"></script>
+      <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>	
+      <title>DYNAMOD - Antarctica</title>
+   </head>
+   <body style="background-color:rgb(231, 243, 238)">
+      <!-- Navigation -->
+      <nav class="navbar navbar-light static-top" style="background-color:rgb(116, 205, 235)">
+         <div class="container">
+            <a class="navbar-brand" href="../#">Home</a>
+            <a class="navbar-brand" href="../greenland">Greenland</a>
+            <!--
+            <a class="navbar-brand" href="../lessons">Lessons</a>
+            <a class="navbar-brand" href="../references">References</a>
+            <a class="navbar-brand" href="../about">About Us</a>
+            -->
+         </div>
+      </nav>
+      <div class="row">
+         <!--Map Selector -->
+         <div class="column" id="left-pane">
+            <center>
+               <label for="mapType" style="font-size:3">Map type:</label>
+               <select id="mapType">
+                  <option value="0">Speed</option>
+                  <option value="1">Bed</option>
+                  <option value="2">Surface</option>
+                  <option value="3">SMB</option>
+                  <option value="4">Thickness</option>
+                  <option value="5">T2M</option>
+               </select>
+               <button type='button' id='map-remove' style='width:10%;'>Clear Map</button>
+            </center>
+            <div id="map">
+               <div id="legend"></div>
+            </div>
+         </div>
+         <div class="column" id="right-pane">
+
+               <div id='graphVelContainer'></div>
+               <div id='graphBedSurfContainer'></div>
+               <div id='graphSMBContainer'></div>
+               <div id='graphTempContainer'></div>
+               <div id='graphWidthContainer'></div>
+            <!--
+            <div class="row" id="point-form">
+               <form>
+                  <label style='width:15%;'>Point Name:</label><input style='width:25%;' type=text" id='point-name'>
+                  <label style='width:7%;'>Lat:</label><input style='width:12%;' type='text' id='lat-input'>
+                  <label style='width:7%;'>Long:</label><input style='width:12%;' type='text' id='long-input'>
+                  <button type='button' id='point-lookup' style='width:10%;'>Point Look up</button>
+                  <button type='button' id='point-remove' style='width:10%;'>Remove Points</button>
+               </form>
+               <div id='point-table-container' class='scrollable'>
+                  <table id='point-table'>
+                     <tr>
+                        <th>Point Name</th>
+                        <th>Lat</th>
+                        <th>Long</th>
+                        <th>Speed</th>
+                        <th>Bed</th>
+                        <th>Surface</th>
+                        <th>SMB</th>
+                        <th>Thickness</th>
+                        <th>T2M</th>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+            <div class="row" id="flowline-chart">
+               <form>
+                  <label style='width:15%;'>Flowline Name:</label><input style='width:15%;' type=text" value='Jakobshavn' id='flowline-name'>
+                  <label style='width:7%;'>Lat:</label><input style='width:12%;' type='text' value='69.1' id='flow-lat-input'>
+                  <label style='width:7%;'>Long:</label><input style='width:12%;' type='text' value='-49.46' id='flow-long-input'>
+                  <label style='width:7%;'>Vel Threshold:</label><input style='width:12%;' type='text' value='10' id='flow-vel-threshold-input'>
+                  <button type='button' id='flowline-lookup' style='width:25%;'>Flowline Look up</button>
+                  <button type='button' id='flowline-download' style='width:25%;'>Flowline Download</button>
+                  <button type='button' id='flowlineAvg-download' style='width:40%;'>Width Average Flowline Download</button>
+               </form>
+               <center>
+                  <label for="flowlineSelector" style="font-size:3">Flowlines:</label>
+                  <select id="flowlineSelector">
+                  </select>
+                  <label for='selectedIndex' style='font-size:3' id='selectedIndexLabel'></label>
+               </center>
+               <div id='flowline-table-container' class='scrollable'>
+                  <table id='flowline-table'>
+                     <tr>
+                        <th>Point</th>
+                        <th>Lat</th>
+                        <th>Long</th>
+                        <th>Speed</th>
+                        <th>Bed</th>
+                        <th>Surface</th>
+                        <th>SMB</th>
+                        <th>Thickness</th>
+                        <th>T2M</th>
+                        <th>Width</th>
+                     </tr>
+                  </table>
+               </div>
+            </div>
+         -->
+         </div>
+         
+      </div>
+      <!--
+      <div id='graphVelContainer'></div>
+      <div id='graphBedSurfContainer'></div>
+      <div id='graphSMBContainer'></div>
+      <div id='graphTempContainer'></div>
+      <div id='graphWidthContainer'></div>
+      -->
+
+
+      <div class="row" id="point-form">
+            <center>
+            <form>
+               <label style='width:5%;'>Point Name:</label><input style='width:5%;' type=text" id='point-name'>
+               <label style='width:5%;'>Lat:</label><input style='width:5%;' type='text' id='lat-input'>
+               <label style='width:5%;'>Long:</label><input style='width:5%;' type='text' id='long-input'>
+               <button type='button' id='point-lookup' style='width:10%;'>Point Look up</button>
+               <button type='button' id='point-remove' style='width:10%;'>Remove Points</button>
+            </form>
+            <div id='point-table-container' class='scrollable'>
+               <table id='point-table'>
+                  <tr>
+                     <th>Point Name</th>
+                     <th>Lat</th>
+                     <th>Long</th>
+                     <th>Speed</th>
+                     <th>Bed</th>
+                     <th>Surface</th>
+                     <th>SMB</th>
+                     <th>Thickness</th>
+                     <th>T2M</th>
+                  </tr>
+               </table>
+            </div>
+         </center>
+         </div>
+         <div class="row" id="flowline-chart">
+            <center>
+            <form>
+               <label style='width:7%;'>Flowline Name:</label><input style='width:5%;' type=text" value='Ross Ice Shelf' id='flowline-name'>
+               <label style='width:5%;'>Lat:</label><input style='width:5%;' type='text' value='-81.5' id='flow-lat-input'>
+               <label style='width:5%;'>Long:</label><input style='width:5%;' type='text' value='-175' id='flow-long-input'>
+               <label style='width:7%;'>Vel Threshold:</label><input style='width:12%;' type='text' value=5 id='flow-vel-threshold-input'>
+               <button type='button' id='flowline-lookup' style='width:10%;'>Flowline Look up</button>
+               <button type='button' id='flowline-download' style='width:10%;'>Flowline Download</button>
+               <button type='button' id='flowlineAvg-download' style='width:10%;'>Width Average Flowline Download</button>
+            </form>
+
+               <label for="flowlineSelector" style="font-size:3">Flowlines:</label>
+               <select id="flowlineSelector">
+               </select>
+               <label for='selectedIndex' style='font-size:3' id='selectedIndexLabel'></label>
+
+            <div id='flowline-table-container' class='scrollable'>
+               <table id='flowline-table'>
+                  <tr>
+                     <th>Point</th>
+                     <th>Lat</th>
+                     <th>Long</th>
+                     <th>Speed</th>
+                     <th>Bed</th>
+                     <th>Surface</th>
+                     <th>SMB</th>
+                     <th>Thickness</th>
+                     <th>T2M</th>
+                     <th>Width</th>
+                  </tr>
+               </table>
+            </div>
+            </center>
+         </div>
+
+      <div id="parameters">
+         <div class="row">
+            <div class="row">
+               <div class="card">
+                  <div class="card-body">
+                     <h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+                        <span data-toggle="tooltip" title="Param1Description">Friction/Sliding (%)</span>
+                     </h3>
+                     <center>
+                        <form class="range-field my-1">
+                           <input id="slider1" class="no-border" type="range" value="100" min="50" max="200"/>
+                        </form>
+                        <h2 class="display-4" style="color:#0d47a1"><strong id="param1Value">100</strong></h2>
+                     </center>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="card">
+                  <div class="card-body">
+                     <h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+                        <span data-toggle="tooltip" title="Param3Description">Air Temp (+/-)</span>
+                     </h3>
+                     <center>
+                        <form class="range-field my-1">
+                           <input id="slider3" class="no-border" type="range" value="0" min="-5" max="5" />
+                        </form>
+                        <h2 class="display-4" style="color:#0d47a1"><strong id="param3Value">0</strong></h2>
+                     </center>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="card">
+                  <div class="card-body">
+                     <h3 class="text-center font-weight-bold blue-text mt-3 mb-4 pb-4">
+                        <span data-toggle="tooltip" title="Param4Description">Precipitation (%)</span>
+                     </h3>
+                     <center>
+                        <form class="range-field my-1">
+                           <input id="slider4" class="no-border" type="range" value="100" min="25" max="175" />
+                        </form>
+                        <h2 class="display-4" style="color:#0d47a1"><strong id="param4Value">100</strong></h2>
+                     </center>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <center>
+         <button type="button" class="btn btn-primary" id="run-model">Run Model</button>
+         <div id="model-graph" style="height: 95vh"></div>
+      </center>
+      <script src="{% static 'greenlandPage/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'antarcticaPage/scripts/script.js' %}"></script>
+      
+   </body>
+</html>

@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>DYNAMOD</title>
+
+      <!-- Custom styles for this template -->
+      <link href="{% static 'landingPage/css/landingPage.css' %}" rel="stylesheet">
+   </head>
+   <body>
+
+    <a class="left" href="antarctica" style="background-image: url({% static 'landingPage/img/antarctica.jpeg' %});"></a>
+    <a class="right" href="greenland"  style="background-image: url({% static 'landingPage/img/greenland.jpg' %});"></a>
+
+    <div class="text-block-ant">
+      <h1>Antarctica</h1>
+    </div>
+    <div class="text-block-green">
+      <h1>Greenland</h1>
+    </div>
+
+
+</html>
