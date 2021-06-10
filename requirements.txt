@@ -1,5 +1,5 @@
 cycler==0.10.0
-Django==2.1.7
+Django==2.2.24
 django-lrucache-backend==2.0.0
 fenics==2019.1.0
 fenics-dijitso==2019.1.0
