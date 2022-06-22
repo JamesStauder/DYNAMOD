@@ -11,7 +11,7 @@ kiwisolver==1.0.1
 lru-dict==1.1.6
 matplotlib==3.0.2
 mpmath==1.1.0
-numpy==1.16.3
+numpy==1.22.0
 pyparsing==2.4.0
 pyproj==1.9.6
 python-dateutil==2.8.0
